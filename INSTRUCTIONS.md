@@ -49,3 +49,46 @@ Keep a historical record of all math operations and solutions on the server. Dis
 - Deploy to Heroku!
 
   *Deploying a project makes it available to the masses and is a necessary step for which to prepare when planning a project.*
+
+
+
+Data Model
+
+Operations
+[
+  {
+    number1: 10
+    number2: 10
+    operator: +-*/
+    answer: =
+  }
+]
+*******************
+API EndPoints
+
+POST /operations
+Sends it to the server
+
+request body will look likethe operations model almost
+[
+  {
+    number1: 10
+    number2: 10
+    operator: +-*/
+  }
+]
+**********************
+
+GET /operations
+Gets a list of operations from the server
+
+Response body, is the same but also returns a result
+[
+  {
+    number1: 10
+    number2: 10
+    operator: +-*/
+    answer: =
+  }
+  // additional stuff
+]
