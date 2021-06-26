@@ -12,12 +12,27 @@ function onReady() {
 }
 // global
 
-// give operator a name
+// give operator a name its global
 let operator;
 
+
+// as in from the server
+function getOperation() {
+  $.ajax({
+    url: '/operations',
+    method: 'GET'
+  })
+    .then(res => {
+      console.log('GET /operations', res);
+    })
+    .catch(err => {
+      console.log(' GET /operations', err);
+    })
+}
+
 function clickOperator() {
-    operator = $(this).text();
-    console.log('operator click', operator);
+    operator = $(this).text();//
+    console.log('operator click', operator);// i will need this information for post
 }
 
 
@@ -46,5 +61,5 @@ function equal() {
   })
 .catch(err => {
     console.log('POST /operations fail', err);
-  });
+  })
 }
