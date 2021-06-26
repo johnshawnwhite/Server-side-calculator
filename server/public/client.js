@@ -6,9 +6,9 @@ function onReady() {
 
 
     //click event for equal button, class will work bc only one possible target for class
-    $(document).on('click', '#equal-Button', equal);
+    $(document).on('click', '#submit', equal);
     //this is for all other both of these buttons behave similar to the delete button from salary calculator
-    $(document).on('click', '.operator-Button', clickOperator);
+    $(document).on('click', '#operator', clickOperator);
 }
 // global
 
@@ -24,22 +24,28 @@ function getOperation() {
   })
     .then(res => {
       console.log('GET /calculations', res);
+
+        // send calculations list to the dom
+      $('#calculations').empty();
+        for (let operation of res) {
+          $('#calculations').append(`
+          ${operation.firstNumber} ${operation.operator} ${operation.secondNumber} = ${operations.result}
+          `);
+      }
+
+
     })
     .catch(err => {
       console.log(' GET /calculations', err);
 
 
-      // send calculations list to the dom
-      $('#calculations-list').empty();
-      for (let operation of res) {
-        $('#calculations-list').append(`
-        ${operation.firstNumber} ${operation.operator} ${operation.secondNumber} = ${operations.result}`);
-      }
+      
+      
     })
 }
 
 function clickOperator() {
-    operator = $(this).text();//
+    operator = $(this).text();// captures the value of the operator chosen
     console.log('operator click', operator);// i will need this information for post
 }
 
@@ -49,16 +55,16 @@ function equal() {
     console.log('equal');
 
     //gather input fields
-    const firstNumber = $('#firstNumber').val();
-    const operator = $('#operator').val();
-    const secondNumber = $('#secondNumber').val();
+    const firstNumber = $('#firstNumber');
+    const operator = $('#operator');
+    const secondNumber = $('#secondNumber');
     
     //post gathering from input fields
     //server will calculate
 
   $.ajax({
     url: '/calculations',
-    mehod: 'POST',
+    method: 'POST',
     data:  {
         firstNumber: firstNumber,
         secondNumber: secondNumber,
