@@ -1,3 +1,4 @@
+
 const express = require('express');
 // had to add above line, i installed parser as well. thought i needed it. assuming i was wrong at this point.
 // but had have the bodyparser const, because of the installed package
@@ -5,14 +6,14 @@ const app = express();
 const PORT = 5000;
 //global, all endpoints must connect
 
-//history
-let operations = [];
+//history 
+let calculations = [];
 
 
 // provide static files for client side
 app.use(express.static('server/public'));
 // will not run, lots of errors, without this
-app.use(express.urlencoded({ extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // let bodyParser = require('body-parser');
@@ -23,8 +24,8 @@ app.listen(PORT, () => {
 });
 
 
-app.get('/operations', (req, res) => {
-    res.send(operations);
+app.get('/calculations', (req, res) => {
+    res.send(calculations);
 });
 // request body will look likethe operations model almost
 
@@ -36,8 +37,8 @@ app.get('/operations', (req, res) => {
 //   Respond with OK (201)
 // **********************
 
-app.post('/operations', (req, res) => {
-    console.log('POST /operations', req.body);
+app.post('/calculations', (req, res) => {
+    console.log('POST /calculations', req.body);
 
     //gather information from inputs here
     const firstNumber = Number(req.body.firstNumber);
@@ -60,17 +61,17 @@ app.post('/operations', (req, res) => {
     }
     else {
         res.sendStatus(400).send('Try again');
-        return
+        return;
     }
     console.log('result', result);
 // get endpoint needs to use the post
 // you are pushing this object into the array to display on history
-operations.push({
-    firstNumber: firstNumber,
-    secondNumber: secondNumber,
-    operator: operator,
-    result: result
-})
+calculations.push({
+        firstNumber: firstNumber,
+        secondNumber: secondNumber,
+        operator: operator,
+        result: result
+});
     res.sendStatus(201);
 
 });

@@ -19,14 +19,22 @@ let operator;
 // as in from the server
 function getOperation() {
   $.ajax({
-    url: '/operations',
+    url: '/calculations',
     method: 'GET'
   })
     .then(res => {
-      console.log('GET /operations', res);
+      console.log('GET /calculations', res);
     })
     .catch(err => {
-      console.log(' GET /operations', err);
+      console.log(' GET /calculations', err);
+
+
+      // send calculations list to the dom
+      $('#calculations-list').empty();
+      for (let operation of res) {
+        $('#calculations-list').append(`
+        ${operation.firstNumber} ${operation.operator} ${operation.secondNumber} = ${operations.result}`);
+      }
     })
 }
 
@@ -41,14 +49,15 @@ function equal() {
     console.log('equal');
 
     //gather input fields
-    const firstNumber = $('#first-number').val();
-    const secondNumber = $('#second-number').val();
+    const firstNumber = $('#firstNumber').val();
+    const operator = $('#operator').val();
+    const secondNumber = $('#secondNumber').val();
     
     //post gathering from input fields
     //server will calculate
 
   $.ajax({
-    url: '/operations',
+    url: '/calculations',
     mehod: 'POST',
     data:  {
         firstNumber: firstNumber,
@@ -57,9 +66,9 @@ function equal() {
     }
   })
   .then(res => {
-    console.log('POST /operations complete', res);
+    console.log('POST /calculations complete', res);
   })
 .catch(err => {
-    console.log('POST /operations fail', err);
+    console.log('POST /calculations fail', err);
   })
 }
