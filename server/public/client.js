@@ -1,14 +1,22 @@
+$(document).ready(onReady);
+
 console.log('js loaded');
 
 
 function onReady() {
     console.log('will recieve meets expectation or better')
 
-
     //click event for equal button, class will work bc only one possible target for class
-    $(document).on('click', '#submit', equal);
+    $('#submit').on('click', equal);
+    // console.log('clicked equal')
     //this is for all other both of these buttons behave similar to the delete button from salary calculator
-    $(document).on('click', '#operator', clickOperator);
+    $('.operator').on('click', clickOperator);
+    console.log('clicked an operator')
+    $('#reset').on('click', clearInputs);
+    getOperation();
+    
+
+
 }
 // global
 
@@ -19,17 +27,17 @@ let operator;
 // as in from the server
 function getOperation() {
   $.ajax({
+    method: 'GET',
     url: '/calculations',
-    method: 'GET'
   })
-    .then(res => {
-      console.log('GET /calculations', res);
+    .then(result => {
+      console.log('GET /calculations', result);
 
         // send calculations list to the dom
       $('#calculations').empty();
-        for (let operation of res) {
+        for (let operation of result) {
           $('#calculations').append(`
-          ${operation.firstNumber} ${operation.operator} ${operation.secondNumber} = ${operations.result}
+          <li>${operation.firstNumber} ${operation.operator} ${operation.secondNumber} = ${operation.result}</li>
           `);
       }
 
@@ -44,6 +52,13 @@ function getOperation() {
     })
 }
 
+function clearInputs() {
+  $('#firstNumber').val('');
+  $('#secondNumber').val('');
+  operator = undefined;
+  console.log('inputs clear')
+}
+
 function clickOperator() {
     operator = $(this).text();// captures the value of the operator chosen
     console.log('operator click', operator);// i will need this information for post
@@ -52,29 +67,26 @@ function clickOperator() {
 
 
 function equal() {
-    console.log('equal');
+    console.log('equal button has been clicked');
 
-    //gather input fields
-    const firstNumber = $('#firstNumber');
-    const operator = $('#operator');
-    const secondNumber = $('#secondNumber');
     
     //post gathering from input fields
     //server will calculate
 
   $.ajax({
-    url: '/calculations',
     method: 'POST',
+    url: '/calculations',
     data:  {
-        firstNumber: firstNumber,
-        secondNumber: secondNumber,
+        firstNumber: $('#firstNumber').val(),
+        secondNumber: $('#secondNumber').val(),
         operator: operator,
     }
   })
-  .then(res => {
-    console.log('POST /calculations complete', res);
+  .then(result => {
+    console.log('POST /calculations complete', result);
+    getOperation();
   })
-.catch(err => {
+  .catch(err => {
     console.log('POST /calculations fail', err);
   })
 }

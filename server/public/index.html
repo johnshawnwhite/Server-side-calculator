@@ -6,38 +6,44 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <script src="jQuery-3.6.0.min.js"></script>
    <script src="client.js"></script>
+   
+
    <title>Document</title>
 </head>
-<body>
 
-   <form>
-   <table width = "100%" border = "3">
-      <tr>
-         <th> 1st Number </th>
-         <th>  operator </th>
-         <th> 2nd Number </th>
-      </tr>
-      <tr>
-        <td><input type = "text" id="firstNumber"
-             name = "firstNumber" size="45%"></td>
-        <td><select name = "operator" id="operator">
-            <option value = "+">+
-            <option value = "-">-
-            <option value = "*">*
-            <option value = "/">/
-        </td>
-        <td><input type = "text" id="secondNumber"
-             name = "secondNumber" size="45%"></td>
-      </tr>
-   </table>
-   <p>
-   
-   &nbsp; &nbsp; <input type="submit" 
-                  value = "submit calculation">
-   &nbsp; &nbsp; <input type="reset"
-                  value = "reset the form">
-   </p>
-   </form>
+
+<body>
+   <h1>Server Side Calculator</h1>
+
+   <!-- first-number -->
+   <input
+     type="text"
+     placeholder="First Number"
+     id="firstNumber"
+   />
+   <!-- the four operators -->
+   <!-- <select id="operator">
+      <option value = "+">+
+      <option value = "-">-
+      <option value = "*">*
+      <option value = "/">/ -->
+   <button class="operator" id="plus-button">+</button>
+   <button class="operator" id="minus-button">-</button>
+   <button class="operator" id="multiply-button">*</button>
+   <button class="operator" id="divide-button">/</button>
+
+   <!-- second-number -->
+   <input
+     type="text"
+     placeholder="Second Number"
+     id="secondNumber"
+   />
+
+   <!-- equal and reset buttons -->
+   <button id="submit">=</button>
+   <button id="reset">C</button>
+
+   <!--history area -->
    <ul id="calculations"></ul>
-   </body>
-</html>
+</body>
+</html>  

@@ -9,6 +9,9 @@ const PORT = 5000;
 //history 
 let calculations = [];
 
+// let bodyParser = require('body-parser');
+// app.use(bodyParser.urlencoded({ extended: true }));
+
 
 // provide static files for client side
 app.use(express.static('server/public'));
@@ -27,15 +30,7 @@ app.listen(PORT, () => {
 app.get('/calculations', (req, res) => {
     res.send(calculations);
 });
-// request body will look likethe operations model almost
 
-//   {
-//     number1: 10
-//     number2: 10
-//     operator: +-*/
-//   }
-//   Respond with OK (201)
-// **********************
 
 app.post('/calculations', (req, res) => {
     console.log('POST /calculations', req.body);
@@ -64,9 +59,11 @@ app.post('/calculations', (req, res) => {
         return;
     }
     console.log('result', result);
+
 // get endpoint needs to use the post
 // you are pushing this object into the array to display on history
-calculations.push({
+
+    calculations.push({
         firstNumber: firstNumber,
         secondNumber: secondNumber,
         operator: operator,
